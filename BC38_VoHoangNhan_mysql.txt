@@ -1,0 +1,263 @@
+drop DATABASE if EXISTS app_food;
+CREATE DATABASE app_food;
+USE app_food;
+
+-- create table users
+CREATE TABLE users(
+	user_id INT PRIMARY KEY auto_increment,
+	full_name VARCHAR(255),
+	email VARCHAR(255),
+	password VARCHAR(255)
+	
+);
+
+-- create table restaurants
+CREATE TABLE restaurants(
+	res_id INT PRIMARY KEY auto_increment,
+	res_name VARCHAR(255),
+	image VARCHAR(255),
+	description VARCHAR(255)
+);
+
+-- create table rate_res
+CREATE TABLE rate_res(
+	user_id INT,
+	FOREIGN KEY(user_id) REFERENCES users(user_id),
+	res_id INT,
+	FOREIGN KEY(res_id) REFERENCES restaurants(res_id),
+	amount INT,
+	date_rate datetime
+);
+
+-- create table like_res
+CREATE TABLE like_res(
+	user_id INT,
+	FOREIGN KEY(user_id) REFERENCES users(user_id),
+	res_id INT,
+	FOREIGN KEY(res_id) REFERENCES restaurants(res_id),
+	date_like datetime
+);
+
+-- tạo table food_type
+CREATE TABLE food_type(
+	type_id INT PRIMARY KEY auto_increment,
+	type_name VARCHAR(255)
+);
+
+-- tạo table  foods
+CREATE TABLE foods(
+	food_id INT PRIMARY KEY auto_increment,
+	food_name VARCHAR(255),
+	image VARCHAR(255),
+	price FLOAT,
+	descript VARCHAR(255),
+	type_id INT,
+	FOREIGN KEY(type_id) REFERENCES food_type(type_id)
+);
+
+-- tạo table order 
+CREATE TABLE orders(
+	user_id INT,
+	FOREIGN KEY(user_id) REFERENCES users(user_id),
+	food_id INT,
+	FOREIGN KEY(food_id) REFERENCES foods(food_id),
+	amount INT,
+	code VARCHAR(255),
+	arr_sub_id VARCHAR(255)
+);
+
+-- tạo table subfood
+CREATE TABLE sub_food(
+	sub_id INT PRIMARY KEY auto_increment,
+	sub_name VARCHAR(255),
+	sub_price FLOAT,
+	food_id INT,
+	FOREIGN KEY(food_id) REFERENCES foods(food_id)
+);
+
+-- thêm dữ liệu các database
+INSERT INTO users (full_name, email, password) VALUES
+('Nguyễn Văn A', 'nguyenvana@example.com', 'password1'),
+('Trần Thị B', 'tranthib@example.com', 'password2'),
+('Lê Văn C', 'levanc@example.com', 'password3'),
+('Phạm Thị D', 'phamthid@example.com', 'password4'),
+('Ngô Văn E', 'ngovane@example.com', 'password5'),
+('Lý Thị F', 'lythif@example.com', 'password6'),
+('Hoàng Văn G', 'hoangvang@example.com', 'password7'),
+('Đặng Thị H', 'dangthih@example.com', 'password8'),
+('Vũ Văn I', 'vuvani@example.com', 'password9'),
+('Trịnh Thị K', 'trinhthik@example.com', 'password10'),
+('Nguyễn Thị L', 'nguyenthil@example.com', 'password11'),
+('Trần Văn M', 'tranvanm@example.com', 'password12'),
+('Lê Thị N', 'lethin@example.com', 'password13'),
+('Phạm Văn O', 'phamvano@example.com', 'password14'),
+('Ngô Thị P', 'ngothip@example.com', 'password15'),
+('Lý Văn Q', 'lyvanq@example.com', 'password16'),
+('Hoàng Thị R', 'hoangthir@example.com', 'password17'),
+('Đặng Văn S', 'dangvans@example.com', 'password18'),
+('Vũ Thị T', 'vuthit@example.com', 'password19'),
+('Trịnh Văn U', 'trinhvanu@example.com', 'password20');
+
+
+INSERT INTO restaurants (res_name, image, description) VALUES
+('Nhà hàng A', 'restaurant_a.jpg', 'Mô tả nhà hàng A'),
+('Nhà hàng B', 'restaurant_b.jpg', 'Mô tả nhà hàng B'),
+('Nhà hàng C', 'restaurant_c.jpg', 'Mô tả nhà hàng C'),
+('Nhà hàng D', 'restaurant_d.jpg', 'Mô tả nhà hàng D'),
+('Nhà hàng E', 'restaurant_e.jpg', 'Mô tả nhà hàng E'),
+('Nhà hàng F', 'restaurant_f.jpg', 'Mô tả nhà hàng F'),
+('Nhà hàng G', 'restaurant_g.jpg', 'Mô tả nhà hàng G'),
+('Nhà hàng H', 'restaurant_h.jpg', 'Mô tả nhà hàng H'),
+('Nhà hàng I', 'restaurant_i.jpg', 'Mô tả nhà hàng I'),
+('Nhà hàng J', 'restaurant_j.jpg', 'Mô tả nhà hàng J'),
+('Nhà hàng K', 'restaurant_k.jpg', 'Mô tả nhà hàng K'),
+('Nhà hàng L', 'restaurant_l.jpg', 'Mô tả nhà hàng L'),
+('Nhà hàng M', 'restaurant_m.jpg', 'Mô tả nhà hàng M'),
+('Nhà hàng N', 'restaurant_n.jpg', 'Mô tả nhà hàng N'),
+('Nhà hàng O', 'restaurant_o.jpg', 'Mô tả nhà hàng O'),
+('Nhà hàng P', 'restaurant_p.jpg', 'Mô tả nhà hàng P'),
+('Nhà hàng Q', 'restaurant_q.jpg', 'Mô tả nhà hàng Q'),
+('Nhà hàng R', 'restaurant_r.jpg', 'Mô tả nhà hàng R'),
+('Nhà hàng S', 'restaurant_s.jpg', 'Mô tả nhà hàng S'),
+('Nhà hàng T', 'restaurant_t.jpg', 'Mô tả nhà hàng T');
+
+INSERT INTO rate_res (user_id, res_id, amount, date_rate) VALUES
+(1, 1, 4, '2023-01-01 12:30:00'),
+(1, 3, 5, '2023-01-02 13:45:00'),
+(3, 5, 3, '2023-01-03 14:20:00'),
+(4, 7, 4, '2023-01-04 16:10:00'),
+(5, 9, 5, '2023-01-05 18:00:00'),
+(6, 11, 3, '2023-01-06 20:15:00'),
+(7, 13, 4, '2023-01-07 22:30:00'),
+(8, 15, 5, '2023-01-08 23:45:00'),
+(9, 17, 3, '2023-01-09 10:05:00'),
+(10, 19, 4, '2023-01-10 11:20:00');
+
+INSERT INTO like_res (user_id, res_id, date_like) VALUES
+(1, 11, '2023-01-01 12:30:00'),
+(1, 3, '2023-01-02 13:45:00'),
+(3, 11, '2023-01-03 14:20:00'),
+(4, 7, '2023-01-04 16:10:00'),
+(5, 9, '2023-01-05 18:00:00'),
+(5, 11, '2023-01-06 20:15:00'),
+(5, 13, '2023-01-07 22:30:00'),
+(8, 15, '2023-01-08 23:45:00'),
+(9, 17, '2023-01-09 10:05:00'),
+(10, 19, '2023-01-10 11:20:00'),
+(4, 11, '2023-01-06 20:15:00'),
+(5, 13, '2023-01-07 22:30:00'),
+(8, 19, '2023-01-08 23:45:00'),
+(8, 17, '2023-01-09 10:05:00'),
+(10, 19, '2023-01-10 11:20:00');
+
+INSERT INTO food_type (type_name) VALUES
+('Đặc sản'),
+('Hải sản'),
+('Nước ngọt'),
+('Mì xào'),
+('Sushi'),
+('Pizza'),
+('Cơm trắng'),
+('Bún riêu'),
+('Bánh mì'),
+('Gỏi cuốn'),
+('Mì quảng'),
+('Bún bò Huế'),
+('Bánh xèo'),
+('Cơm chiên'),
+('Bánh canh'),
+('Bánh mì chảo'),
+('Gỏi bưởi'),
+('Nước mía'),
+('Chả cá Lã Vọng'),
+('Bún đậu mắm tôm');
+
+INSERT INTO foods (food_name, image, price, descript, type_id)
+VALUES
+('Bún bò Huế', 'bun_bo_hue.jpg', 35.0, 'Bún bò Huế thơm ngon', 1),
+('Cơm gà xối mỡ', 'com_ga_xoi_mo.jpg', 40.0, 'Cơm gà xối mỡ thơm ngon', 7),
+('Sushi hải sản', 'sushi_hai_san.jpg', 80.0, 'Sushi hải sản tươi ngon', 5),
+('Bánh mì chảo', 'banh_mi_chao.jpg', 25.0, 'Bánh mì chảo thơm ngon', 9),
+('Mì xào gà', 'mi_xao_ga.jpg', 35.0, 'Mì xào gà thơm ngon', 4),
+('Pizza hải sản', 'pizza_hai_san.jpg', 65.0, 'Pizza hải sản thơm ngon', 6),
+('Bún riêu cua', 'bun_rieu_cua.jpg', 30.0, 'Bún riêu cua thơm ngon', 8),
+('Gỏi cuốn', 'goi_cuon.jpg', 20.0, 'Gỏi cuốn tươi ngon', 10),
+('Phở bò', 'pho_bo.jpg', 45.5, 'Phở bò hương vị truyền thống', 1),
+('Cá hồi hấp', 'ca_hoi_hap.jpg', 120.0, 'Cá hồi hấp tươi ngon', 2),
+('Cơm trắng', 'com_trang.jpg', 15.0, 'Cơm trắng thơm ngon', 7),
+('Gỏi bưởi', 'goi_buoi.jpg', 25.0, 'Gỏi bưởi tươi ngon', 10),
+('Mì quảng', 'mi_quang.jpg', 40.0, 'Mì quảng thơm ngon', 1),
+('Bánh xèo', 'banh_xeo.jpg', 30.0, 'Bánh xèo giòn ngon', 4),
+('Bánh mì', 'banh_mi.jpg', 10.0, 'Bánh mì mềm thơm', 9),
+('Bún đậu mắm tôm', 'bun_dau_mam_tom.jpg', 25.0, 'Bún đậu mắm tôm thơm ngon', 8),
+('Nước mía', 'nuoc_mia.jpg', 5.0, 'Nước mía tươi ngon', 3),
+('Chả cá Lã Vọng', 'cha_ca_la_vong.jpg', 50.0, 'Chả cá Lã Vọng thơm ngon', 1),
+('Bánh canh', 'banh_canh.jpg', 35.0, 'Bánh canh thơm ngon', 4),
+('Bánh mì chảo', 'banh_mi_chao.jpg', 25.0, 'Bánh mì chảo thơm ngon', 9);
+
+INSERT INTO sub_food (sub_name, sub_price, food_id) VALUES
+('Thêm thịt bò', 5.0, 1),
+('Thêm nước sốt', 3.0, 1),
+('Thêm phô mai', 4.0, 6),
+('Thêm rau sống', 2.0, 8),
+('Thêm pate', 1.5, 9),
+('Thêm xôi', 3.0, 4),
+('Thêm trứng gà', 2.0, 5),
+('Thêm ớt', 1.0, 7),
+('Thêm nước sốt cay', 1.5, 10),
+('Thêm bơ', 3.0, 3);
+
+
+INSERT INTO orders (user_id, food_id, amount, code, arr_sub_id) VALUES
+(1, 1, 2, 'ORDER123', '1,2'),
+(2, 3, 1, 'ORDER456', '3'),
+(3, 5, 3, 'ORDER789', '4,5,6'),
+(4, 7, 1, 'ORDER101', '7'),
+(5, 9, 2, 'ORDER202', '8,9'),
+(6, 2, 1, 'ORDER303', '10'),
+(2, 4, 2, 'ORDER404', '1,2'),
+(7, 6, 3, 'ORDER505', '3,4,5'),
+(4, 8, 1, 'ORDER606', '6'),
+(5, 10, 2, 'ORDER707', '7,8'),
+(9, 3, 1, 'ORDER808', '9'),
+(8, 5, 2, 'ORDER909', '10,1'),
+(3, 7, 3, 'ORDER1010', '2,3,4'),
+(5, 9, 1, 'ORDER1111', '5'),
+(5, 1, 2, 'ORDER1212', '6,7'),
+(1, 4, 1, 'ORDER1313', '8'),
+(5, 6, 2, 'ORDER1414', '9,10'),
+(15, 8, 3, 'ORDER1515', '1,2,3'),
+(11, 10, 1, 'ORDER1616', '4'),
+(10, 2, 2, 'ORDER1717', '5,6');
+
+-- Tìm 5 người đã like nhà hàng nhiều nhất
+SELECT users.user_id ,users.full_name,COUNT(like_res.user_id) as 'đếm số lượt like'
+FROM like_res
+INNER JOIN users ON like_res.user_id = users.user_id
+GROUP BY like_res.user_id
+ORDER BY COUNT(like_res.user_id) DESC
+LIMIT 5
+
+-- Tìm 2 nhà hàng có lượt like nhiều nhất
+SELECT restaurants.res_id, restaurants.res_name, COUNT(like_res.res_id) as 'đếm số lượt like nhà hàng'
+FROM like_res
+INNER JOIN restaurants ON like_res.res_id = restaurants.res_id
+GROUP BY like_res.res_id
+ORDER BY COUNT(like_res.res_id) DESC
+LIMIT 2
+
+-- Tìm người đã đặt hàng nhiều nhất
+SELECT orders.user_id, users.full_name, COUNT(orders.user_id) as 'đếm số lượt order'
+FROM orders
+INNER JOIN users ON orders.user_id = users.user_id
+GROUP BY user_id
+ORDER BY COUNT(orders.user_id) DESC
+LIMIT 1
+
+-- Tìm người dùng không hoạt động trong hệ thống (không đặt hàng, không like, không đánh giá nhà hàng)
+SELECT users.user_id, users.full_name, users.email, users.`password`
+FROM users 
+LEFT JOIN orders ON orders.user_id = users.user_id
+LEFT JOIN like_res ON like_res.user_id = users.user_id
+LEFT JOIN rate_res ON rate_res.user_id = users.user_id
+WHERE orders.user_id is NULL && like_res.user_id is NULL && rate_res.user_id is NULL
